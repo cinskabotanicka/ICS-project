@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:ContentPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       xmlns:views="using:Trackit.App.Views"
+                       xmlns:m="clr-namespace:Trackit.BL.Models;assembly=Trackit.BL"
+                       x:Class="Trackit.App.Views.Project.ProjectListView"
+                       xmlns:project="using:Trackit.App.ViewModels.Project"
+                       xmlns:res="clr-namespace:Trackit.App.Resources.Texts" 
+                       x:Name="ProjectListViewRoot"
+                       Title="TrackIT"
+                       x:DataType="project:ProjectListViewModel">
+
+    <Grid ColumnDefinitions="*"
+          RowDefinitions="20, Auto, 20, *, *, 50"
+          BackgroundColor="White">
+
+        <CollectionView Grid.Row="3" Grid.RowSpan="3" Grid.Column="1" BackgroundColor="White" VerticalOptions="Start" HorizontalOptions="Center"
+                        ItemsSource="{Binding Projects}">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Horizontal"
+                                 HorizontalItemSpacing="6" VerticalItemSpacing="6"
+                                 Span="1" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="m:ProjectListModel">
+                    <Frame Padding="0"
+                           WidthRequest="200" HeightRequest="100"
+                                   IsClippedToBounds="False">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Source={x:Reference ProjectListViewRoot}, Path=BindingContext.GoToDetailCommand}"
+                                                  CommandParameter="{Binding Id}" />
+                        </Frame.GestureRecognizers>
+
+                        <Grid>
+                            <Label Grid.Row="0"
+                                            
+                                            FontSize="20" LineBreakMode="WordWrap" 
+                                            FontAttributes="Bold"
+                                            Text="{Binding Name}"
+                                            TextColor="White" VerticalOptions="Center" HorizontalOptions="Center" />
+
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Button
+            TextColor="Black"
+            Text="{x:Static res:ProjectListViewTexts.Create_Button_Text}"
+            FontSize="20"
+            Command="{Binding GoToCreateCommand}"
+            Clicked="AddProjectClicked"
+            VerticalOptions="End"
+            HorizontalOptions="Center"
+            Grid.Row="4"
+            BorderColor="Black" />
+
+    </Grid>
+
+</views:ContentPageBase>

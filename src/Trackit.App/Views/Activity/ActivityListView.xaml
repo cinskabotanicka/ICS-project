@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:ContentPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       xmlns:views="using:Trackit.App.Views"
+                       x:Class="Trackit.App.Views.Activity.ActivityListView"
+                       xmlns:m="clr-namespace:Trackit.BL.Models;assembly=Trackit.BL"
+                       xmlns:activity="using:Trackit.App.ViewModels.Activity"
+                       xmlns:res="clr-namespace:Trackit.App.Resources.Texts" 
+                       Title="TrackIT"
+                       x:Name="ActivityListViewRoot"
+                       x:DataType="activity:ActivityListViewModel">
+
+    <Grid ColumnDefinitions="*"
+          RowDefinitions="20, Auto, 10, Auto, Auto, *, 50"
+          BackgroundColor="White">
+
+        <HorizontalStackLayout
+            Margin="10"
+            Background="White"
+            Grid.Row="1"
+            HorizontalOptions="Center">
+
+            <Label TextColor="Black" Text="{x:Static res:ActivityListViewTexts.Filter_All_RadioButton_Text}" />
+            <RadioButton
+                GroupName="PresetFilters"
+                Value="All"
+                IsChecked="True"
+                CheckedChanged="OnChecked" />
+
+            <Label TextColor="Black" Text="{x:Static res:ActivityListViewTexts.Filter_Week_RadioButton_Text}" />
+            <RadioButton
+                GroupName="PresetFilters"
+                Value="Week"
+                CheckedChanged="OnChecked" />
+
+            <Label TextColor="Black" Text="{x:Static res:ActivityListViewTexts.Filter_Month_RadioButton_Text}" />
+            <RadioButton
+                GroupName="PresetFilters"
+                Value="Month"
+                CheckedChanged="OnChecked" />
+
+            <Label TextColor="Black" Text="{x:Static res:ActivityListViewTexts.Filter_90_RadioButton_Text}" />
+            <RadioButton
+                GroupName="PresetFilters"
+                Value="Ninety"
+                CheckedChanged="OnChecked" />
+
+            <Label TextColor="Black" Text="{x:Static res:ActivityListViewTexts.Filter_Year_RadioButton_Text}" />
+            <RadioButton
+                GroupName="PresetFilters"
+                Value="Year"
+                CheckedChanged="OnChecked" />
+        </HorizontalStackLayout>
+
+        <Grid
+            ColumnDefinitions="30, Auto, 80, Auto, Auto, Auto, 80, Auto, 50"
+            Background="White"
+            Grid.Row="3"
+            HorizontalOptions="Center">
+            <Label
+                TextColor="Black"
+                Text="{x:Static res:ActivityListViewTexts.Filter_After_RadioButton_Text}"
+                Grid.Column="1"/>
+            <Switch
+                Grid.Column="2"
+                ThumbColor="Black"
+                Toggled="OnAfterDateCheckedChanged" />
+            <DatePicker
+                Grid.Column="3"
+                TextColor="Black"
+                FontSize="25"
+                BackgroundColor="LightGray"
+                Format="d"
+                MinimumDate="1.1.2000"
+                Date="{Binding SelectedAfterDate}" />
+            <Label
+                TextColor="white"
+                Text="00000000000000"
+                Grid.Column="4"/>
+            <Label
+                Grid.Column="5"
+                TextColor="Black"
+                Text="{x:Static res:ActivityListViewTexts.Filter_Before_RadioButton_Text}" />
+            <Switch
+                Grid.Column="6"
+                ThumbColor="Black"
+                Toggled="OnBeforeDateCheckedChanged" />
+            <DatePicker
+                Grid.Column="7"
+                TextColor="Black"
+                FontSize="25"
+                BackgroundColor="LightGray"
+                Format="d"
+                MinimumDate="1.1.2000"
+                Date="{Binding SelectedBeforeDate}" />
+        </Grid>
+
+        <CollectionView Grid.Row="4" Grid.RowSpan="3" BackgroundColor="White" HorizontalOptions="Center" VerticalOptions="FillAndExpand"
+                        ItemsSource="{Binding Activities}">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Horizontal"
+                                 HorizontalItemSpacing="6"
+                                 VerticalItemSpacing="6"
+                                 Span="1" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="m:ActivityListModel">
+                    <Frame
+                         BackgroundColor="{Binding ProjectId, Converter={StaticResource GuidToColorConverter}}"
+                         Padding="5"
+                         CornerRadius="14"
+                        WidthRequest="210" HeightRequest="90"
+                         BorderColor="Transparent">
+                        <Frame Padding="0"
+                                       HorizontalOptions="Center"
+                                       CornerRadius="10"
+                                       WidthRequest="200" HeightRequest="80"
+                                       IsClippedToBounds="False">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={x:Reference ActivityListViewRoot}, Path=BindingContext.GoToDetailCommand}"
+                                                      CommandParameter="{Binding Id}" />
+                            </Frame.GestureRecognizers>
+
+                            <Grid>
+
+                                <Label Grid.Row="0"
+                                                Margin="22,12"
+                                                FontSize="20" LineBreakMode="WordWrap" FontAttributes="Bold"
+                                                Text="{Binding Name}"
+                                                TextColor="White" VerticalOptions="Center" HorizontalOptions="Center" />
+
+                            </Grid>
+                        </Frame>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Button
+            TextColor="Black"
+            Text="{x:Static res:ActivityListViewTexts.Add_New_Activity_Button_Text}"
+            FontSize="20"
+            Command="{Binding GoToCreateCommand}"
+            VerticalOptions="End"
+            HorizontalOptions="Center"
+            Grid.Row="5"
+            BorderColor="Black" />
+
+    </Grid>
+
+</views:ContentPageBase>

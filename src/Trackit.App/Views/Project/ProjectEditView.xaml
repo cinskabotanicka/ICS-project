@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:ContentPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       xmlns:views="using:Trackit.App.Views"
+                       x:Class="Trackit.App.Views.Project.ProjectEditView"
+                       xmlns:project="using:Trackit.App.ViewModels.Project"
+                       xmlns:res="clr-namespace:Trackit.App.Resources.Texts" 
+                       Title="TrackIT"
+                       x:DataType="project:ProjectEditViewModel">
+
+    <Grid
+        ColumnDefinitions="20, Auto, *, 20"
+        RowDefinitions="20, Auto, 40, Auto, 40, *, 40, *, *, 50"
+        BackgroundColor="White"
+        ColumnSpacing="30">
+
+        <Label
+            TextColor="Black"
+            Text="{x:Static res:ProjectEditViewTexts.Name_Label_Text}"
+            FontSize="25"
+            Grid.Row="3"
+            Grid.Column="1"
+            HorizontalOptions="End" />
+
+        <Entry
+            ClearButtonVisibility="WhileEditing"
+            FontSize="25"
+            TextColor="Black"
+            Grid.Row="3"
+            Grid.Column="2"
+            Placeholder="{x:Static res:ProjectEditViewTexts.Name_Input_Text}"
+            PlaceholderColor="Gray"
+            Text="{Binding Project.Name}"
+            BackgroundColor="LightGray" />
+
+        <HorizontalStackLayout
+            Grid.Row="8"
+            Grid.Column="2"
+            HorizontalOptions="Center"
+            VerticalOptions="End"
+            Spacing="20">
+
+            <Button
+                TextColor="Black"
+                Text="{x:Static res:ProjectEditViewTexts.Save_Button_Text}"
+                FontSize="20"
+                Command="{Binding SaveCommand}"
+                VerticalOptions="End"
+                HorizontalOptions="Center"
+                BorderColor="Black" />
+
+        </HorizontalStackLayout>
+
+    </Grid>
+
+    </views:ContentPageBase>

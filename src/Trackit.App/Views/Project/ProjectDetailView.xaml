@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:ContentPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       xmlns:views="using:Trackit.App.Views"
+                       x:Class="Trackit.App.Views.Project.ProjectDetailView"
+                       xmlns:m="clr-namespace:Trackit.BL.Models;assembly=Trackit.BL"
+                       xmlns:res="clr-namespace:Trackit.App.Resources.Texts" 
+                       xmlns:project="using:Trackit.App.ViewModels.Project"
+                       Title="TrackIT"
+                       x:DataType="project:ProjectDetailViewModel">
+
+    <Grid
+        ColumnDefinitions="20, Auto, *, 20"
+        RowDefinitions="20, Auto, 40, Auto, 0, *, 0, *, 10, *, 50"
+        BackgroundColor="White"
+        ColumnSpacing="30">
+
+        <Label
+            TextColor="Black"
+            Text="{x:Static res:ProjectDetailViewTexts.Name_Label_Text}"
+            FontSize="25"
+            Grid.Row="3"
+            Grid.Column="1"
+            HorizontalOptions="End" />
+
+        <Label
+            TextColor="Black"
+            Text="{Binding Project.Name}"
+            FontSize="25"
+            Grid.Row="3"
+            Grid.Column="2" />
+
+        <Label
+            TextColor="Black"
+            Text="{x:Static res:ProjectDetailViewTexts.Users_Label_Text}"
+            FontSize="25"
+            Grid.Row="5"
+            Grid.Column="1"
+            HorizontalOptions="End"
+            VerticalOptions="End" />
+
+        <CollectionView Grid.Row="5" Grid.RowSpan="3" Grid.ColumnSpan="3" Grid.Column="2"
+                        ItemsSource="{Binding Users}">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Horizontal"
+                                 HorizontalItemSpacing="6"
+                                 VerticalItemSpacing="6"
+                                 Span="1" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="m:UserListModel">
+                    <Frame Padding="0"
+                                   CornerRadius="5"
+                                   WidthRequest="80" HeightRequest="80"
+                                   IsClippedToBounds="False">
+
+                        <Grid>
+                            <Image Grid.Row="0"
+                                           HorizontalOptions="Fill" VerticalOptions="Fill"
+                                           Aspect="AspectFill"
+                                           WidthRequest="80" HeightRequest="80"
+                                           ToolTipProperties.Text="{Binding FirstName}"
+                                           Source="{Binding PhotoUrl, TargetNullValue='https://placekitten.com/g/320/320'}"/>
+
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Label
+            TextColor="Black"
+            Text="{x:Static res:ProjectDetailViewTexts.Activities_Label_Text}"
+            FontSize="25"
+            Grid.Row="7"
+            Grid.Column="1"
+            HorizontalOptions="End"
+            VerticalOptions="End" />
+
+        <CollectionView Grid.Row="7" Grid.RowSpan="3" Grid.ColumnSpan="3" Grid.Column="2" VerticalOptions="Fill" HorizontalOptions="Fill"
+                        ItemsSource="{Binding Activities}">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Horizontal"
+                                 HorizontalItemSpacing="6" VerticalItemSpacing="6"
+                                 Span="1" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="m:ActivityListModel">
+
+                    <Frame Padding="0"
+                           WidthRequest="200" HeightRequest="50"
+                           IsClippedToBounds="False">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer/>
+                        </Frame.GestureRecognizers>
+
+                        <Grid>
+                            <Label Grid.Row="0"
+                                   FontSize="20" LineBreakMode="WordWrap" FontAttributes="Bold"
+                                   Text="{Binding Name}"
+                                   TextColor="White" VerticalOptions="Center"
+                                   HorizontalOptions="Center"/>
+                        </Grid>
+                    </Frame>
+
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <HorizontalStackLayout
+            Grid.Row="9"
+            Grid.Column="2"
+            HorizontalOptions="Center"
+            VerticalOptions="End"
+            Spacing="20">
+
+            <Button
+                TextColor="Black"
+                Text="{Binding JoinLeaveText}"
+                FontSize="20"
+                IsVisible="{Binding UserLogged}"
+                Command="{Binding JoinLeaveCommand}"
+                VerticalOptions="Start"
+                HorizontalOptions="Center"
+                BorderColor="Black" />
+
+            <Button
+                TextColor="Black"
+                Text="{x:Static res:ProjectDetailViewTexts.Edit_Button_Text}"
+                FontSize="20"
+                Command="{Binding GoToEditCommand}"
+                VerticalOptions="Start"
+                HorizontalOptions="Center"
+                BorderColor="Black" />
+
+            <Button
+                TextColor="Black"
+                Text="{x:Static res:ProjectDetailViewTexts.Delete_Button_Text}"
+                FontSize="20"
+                Command="{Binding DeleteCommand}"
+                VerticalOptions="Start"
+                HorizontalOptions="Center"
+                BorderColor="Black" />
+
+        </HorizontalStackLayout>
+
+    </Grid>
+</views:ContentPageBase>

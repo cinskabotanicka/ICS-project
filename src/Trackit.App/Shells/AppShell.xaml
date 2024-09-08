@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="Trackit.App.Shells.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:va="using:Trackit.App.Views.Activity"
+    xmlns:vu="using:Trackit.App.Views.User"
+    xmlns:vp="using:Trackit.App.Views.Project"
+    xmlns:res="clr-namespace:Trackit.App.Resources.Texts"
+    Shell.TabBarIsVisible="False">
+
+    <Shell.FlyoutHeaderTemplate>
+        <DataTemplate>
+            <Grid BackgroundColor="Black"
+                  HeightRequest="100">
+                <Image Aspect="AspectFill"
+                       Source="trackit.png"
+                       Opacity="0.6" />
+            </Grid>
+        </DataTemplate>
+    </Shell.FlyoutHeaderTemplate>
+
+    <FlyoutItem Title="Menu" FlyoutDisplayOptions="AsMultipleItems">
+
+        <ShellContent
+            Title="{x:Static res:ShellTexts.Users_Label_Text}"
+            Route="users"
+            ContentTemplate="{DataTemplate vu:UserListView}" />
+
+        <ShellContent
+            Title="{x:Static res:ShellTexts.Activities_Label_Text}"
+            Route="activities"
+            ContentTemplate="{DataTemplate va:ActivityListView}" />
+
+        <ShellContent
+            Title="{x:Static res:ShellTexts.Projects_Label_Text}"
+            Route="projects"
+            ContentTemplate="{DataTemplate vp:ProjectListView}" />
+
+    </FlyoutItem>
+
+</Shell>

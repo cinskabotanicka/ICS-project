@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Trackit.App.Views.HomeView"
+             Title="HomeView">
+    <Grid
+        ColumnDefinitions="20, *"
+        BackgroundColor="White">
+        <VerticalStackLayout
+            BackgroundColor="White"
+            Grid.Column="1">
+
+            <Label
+                TextColor="Black"
+                Text="Last activities"
+                FontSize="30"
+                VerticalOptions="Start"
+                HorizontalOptions="Start" />
+
+            <CollectionView />
+
+            <Label
+                TextColor="Black"
+                Text="Your projects"
+                FontSize="30"
+                VerticalOptions="Start"
+                HorizontalOptions="Start" />
+
+            <CollectionView />
+
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

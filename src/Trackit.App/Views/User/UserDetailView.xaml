@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:ContentPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                       xmlns:views="using:Trackit.App.Views"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       x:Class="Trackit.App.Views.User.UserDetailView"
+                       xmlns:user="using:Trackit.App.ViewModels.User"
+                       xmlns:res="clr-namespace:Trackit.App.Resources.Texts" 
+                       Title="TrackIT"
+                       x:Name="UserDetailViewRoot"
+                       x:DataType="user:UserDetailViewModel">
+    <Grid
+        ColumnDefinitions="20, Auto, *, 20"
+        RowDefinitions="20, Auto, 40, Auto, 40, Auto, 40, Auto, *, 50"
+        BackgroundColor="White"
+        ColumnSpacing="30">
+
+        <Label
+            TextColor="Black"
+            Text="{x:Static res:UserDetailViewTexts.Name_Label_Text}"
+            FontSize="25"
+            Grid.Row="3"
+            Grid.Column="1"
+            HorizontalOptions="Center" />
+
+        <Label
+            TextColor="Black"
+            Text="{Binding User.FirstName}"
+            FontSize="25"
+            Grid.Row="3"
+            Grid.Column="2"
+            HorizontalOptions="Start" />
+
+        <Label
+            TextColor="Black"
+            Text="{x:Static res:UserDetailViewTexts.Surname_Label_Text}"
+            FontSize="25"
+            Grid.Row="5"
+            Grid.Column="1"
+            HorizontalOptions="End" />
+
+        <Label
+            TextColor="Black"
+            Text="{Binding User.LastName}"
+            FontSize="25"
+            Grid.Row="5"
+            Grid.Column="2"
+            HorizontalOptions="Start" />
+
+        <Label
+            TextColor="Black"
+            Text="{x:Static res:UserDetailViewTexts.Photo_Label_Text}"
+            FontSize="25"
+            Grid.Row="7"
+            Grid.Column="1"
+            HorizontalOptions="End" />
+
+        <Image Aspect="AspectFill" Grid.Row="7" Grid.Column="2" HorizontalOptions="Start"
+               WidthRequest="160" HeightRequest="160"
+               Source="{Binding User.PhotoUrl, TargetNullValue='https://placekitten.com/g/320/320'}"/>
+
+        <HorizontalStackLayout
+            Grid.Row="8"
+            Grid.Column="2"
+            HorizontalOptions="Center"
+            VerticalOptions="End"
+            Spacing="20">
+
+            <Button
+                TextColor="Black"
+                Text="{x:Static res:UserDetailViewTexts.Edit_Button_Text}"
+                FontSize="20"
+                Command="{Binding GoToEditCommand}"
+                VerticalOptions="Start"
+                HorizontalOptions="Center"
+                BorderColor="Black" />
+
+            <Button
+                TextColor="Black"
+                Text="{x:Static res:UserDetailViewTexts.Delete_Button_Text}"
+                FontSize="20"
+                Command="{Binding DeleteCommand}"
+                VerticalOptions="Start"
+                HorizontalOptions="Center"
+                BorderColor="Black" />
+
+        </HorizontalStackLayout>
+
+    </Grid>
+</views:ContentPageBase>

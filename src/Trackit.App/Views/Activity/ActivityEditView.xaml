@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:ContentPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       xmlns:views="using:Trackit.App.Views"
+                       x:Class="Trackit.App.Views.Activity.ActivityEditView"
+                       xmlns:activity="using:Trackit.App.ViewModels.Activity"
+                       xmlns:res="clr-namespace:Trackit.App.Resources.Texts"
+                       Title="TrackIT"
+                       x:DataType="activity:ActivityEditViewModel">
+
+    <Grid
+        ColumnDefinitions="20, Auto, *, 20"
+        RowDefinitions="20, Auto, 40, Auto, Auto, Auto, 40, Auto, Auto, 40, Auto, *, 50"
+        BackgroundColor="White"
+        ColumnSpacing="30">
+
+        <Label
+            IsVisible="false"
+            TextColor="Black"
+            Text="{Binding Activity.UserId}"
+            FontSize="40"
+            Grid.Column="2"
+            Grid.Row="1"
+            VerticalOptions="Start"
+            HorizontalOptions="Center" />
+
+        <Label
+            TextColor="Black"
+            Text="{x:Static res:ActivityEditViewTexts.Name_Label_Text}"
+            FontSize="25"
+            Grid.Row="3"
+            Grid.Column="1"
+            HorizontalOptions="End" />
+
+        <Entry
+            ClearButtonVisibility="WhileEditing"
+            FontSize="25"
+            TextColor="Black"
+            Grid.Row="3"
+            Grid.Column="2"
+            Placeholder="{x:Static res:ActivityEditViewTexts.Name_Input_Text}"
+            PlaceholderColor="Gray"
+            Text="{Binding Activity.Name}"
+            BackgroundColor="LightGray" />
+
+        <Label
+            TextColor="Black"
+            Text="{x:Static res:ActivityEditViewTexts.Project_Label_Text}"
+            FontSize="25"
+            Grid.Row="4"
+            Grid.Column="1"
+            HorizontalOptions="End" />
+
+        <Picker Grid.Row="4"
+                Grid.Column="2"
+                HorizontalOptions="Fill"
+                TextColor="Black"
+                BackgroundColor="LightGray"
+                FontSize="25"
+                ItemsSource="{Binding Projects}" 
+                ItemDisplayBinding="{Binding ., Converter={StaticResource ProjectToProjectNameConverter}}"
+                SelectedItem="{Binding SelectedProject}" />
+
+        <Label
+            TextColor="Black"
+            Text="{x:Static res:ActivityEditViewTexts.Type_Label_Text}"
+            FontSize="25"
+            Grid.Row="5"
+            Grid.Column="1"
+            HorizontalOptions="End" />
+
+        <Picker Grid.Row="5"
+                Grid.Column="2"
+                HorizontalOptions="Fill"
+                TextColor="Black"
+                
+                BackgroundColor="LightGray"
+                FontSize="25"
+                ItemsSource="{Binding ActivityTypes}" 
+                ItemDisplayBinding="{Binding ., Converter={StaticResource ActivityTypeToStringConverter}}"
+                SelectedItem="{Binding Activity.Type}" />
+
+        <Label
+            TextColor="Black"
+            Text="{x:Static res:ActivityEditViewTexts.From_Label_Text}"
+            FontSize="25"
+            Grid.Row="7"
+            Grid.Column="1"
+            HorizontalOptions="End" />
+
+        <HorizontalStackLayout
+            Grid.Row="7"
+            Grid.Column="2">
+
+            <DatePicker
+                TextColor="Black"
+                FontSize="25"
+                BackgroundColor="LightGray"
+                Format="d"
+                Date="{Binding SelectedStartDate}" />
+
+            <TimePicker
+                TextColor="Black"
+                FontSize="25"
+                BackgroundColor="LightGray"
+                Format="HH:mm"
+                Time="{Binding SelectedStartTime}" />
+
+        </HorizontalStackLayout>
+
+        <Label
+            TextColor="Black"
+            Text="{x:Static res:ActivityEditViewTexts.To_Label_Text}"
+            FontSize="25"
+            Grid.Row="8"
+            Grid.Column="1"
+            HorizontalOptions="End" />
+
+        <HorizontalStackLayout
+            Grid.Row="8"
+            Grid.Column="2">
+
+            <DatePicker
+                TextColor="Black"
+                FontSize="25"
+                BackgroundColor="LightGray"
+                Format="d"
+                Date="{Binding SelectedEndDate}" />
+
+            <TimePicker
+                TextColor="Black"
+                FontSize="25"
+                BackgroundColor="LightGray"
+                Format="HH:mm"    
+                Time="{Binding SelectedEndTime}" />
+
+        </HorizontalStackLayout>
+
+        <Label
+            TextColor="Black"
+            Text="{x:Static res:ActivityEditViewTexts.Description_Label_Text}"
+            FontSize="25"
+            Grid.Row="10"
+            Grid.Column="1"
+            HorizontalOptions="Center" />
+
+        <Entry
+            ClearButtonVisibility="WhileEditing"
+            FontSize="25"
+            TextColor="Black"
+            Grid.Row="10"
+            Grid.Column="2"
+            Placeholder="{x:Static res:ActivityEditViewTexts.Description_Input_Text}"
+            PlaceholderColor="Gray"
+            Text="{Binding Activity.Description}"
+            BackgroundColor="LightGray" />
+
+        <Button
+            TextColor="Black"
+            Text="{x:Static res:ActivityEditViewTexts.Save_Button_Text}"
+            FontSize="20"
+            Command="{Binding SaveCommand}"
+            VerticalOptions="End"
+            HorizontalOptions="Center"
+            BorderColor="Black"
+            Grid.Row="11"
+            Grid.Column="2" />
+
+    </Grid>
+
+</views:ContentPageBase>

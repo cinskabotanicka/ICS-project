@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:ContentPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:views="clr-namespace:Trackit.App.Views"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Trackit.App.Views.User.UserListView"
+             xmlns:m="clr-namespace:Trackit.BL.Models;assembly=Trackit.BL"
+             xmlns:res="clr-namespace:Trackit.App.Resources.Texts" 
+             xmlns:user="using:Trackit.App.ViewModels.User"
+             x:Name="UserListViewRoot"
+             Title="TrackIT"
+             x:DataType="user:UserListViewModel">
+    <Grid ColumnDefinitions="20, *, 20"
+          RowDefinitions="20, Auto, *, *, 50"
+          BackgroundColor="White">
+
+        <CollectionView Grid.Row="2" Grid.RowSpan="3" Grid.Column="1" BackgroundColor="White" HorizontalOptions="Center" VerticalOptions="Start"
+                        ItemsSource="{Binding Users}">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Horizontal"
+                                 HorizontalItemSpacing="20"
+                                 VerticalItemSpacing="6"
+                                 Span="1" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="m:UserListModel">
+                    <Frame Padding="0"
+                                   CornerRadius="100"
+                                   WidthRequest="160" HeightRequest="160"
+                                   IsClippedToBounds="False">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Source={x:Reference UserListViewRoot}, Path=BindingContext.GoToDetailCommand}"
+                                                  CommandParameter="{Binding Id}" />
+                        </Frame.GestureRecognizers>
+
+                        <Grid>
+                            <Image Grid.Row="0"
+                                           HorizontalOptions="Fill" VerticalOptions="Fill"
+                                           Aspect="AspectFill"
+                                           WidthRequest="160" HeightRequest="160"
+                                           Source="{Binding PhotoUrl, TargetNullValue='https://placekitten.com/g/320/320'}" />
+
+                            <Label Grid.Row="0"
+                                            Margin="22,12"
+                                            FontSize="20" LineBreakMode="WordWrap" FontAttributes="Bold"
+                                            Text="{Binding FirstName}"
+                                            TextColor="White" VerticalOptions="End" HorizontalOptions="Center" />
+
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Button
+            TextColor="Black"
+            Text="{x:Static res:UserListViewTexts.Create_Button_Text}"
+            FontSize="20"
+            Command="{Binding GoToCreateCommand}"
+            VerticalOptions="End"
+            HorizontalOptions="Center"
+            Grid.Row="3"
+            Grid.Column="1"
+            BorderColor="Black" />
+
+    </Grid>
+</views:ContentPageBase>
